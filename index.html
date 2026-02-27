@@ -1,0 +1,3234 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Jatin Bharat — Crafting Words. Engineering Visibility. Building Authority.
+    </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Mono:wght@300;400&family=Syne:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #090806;
+        --ink-2: #111009;
+        --ink-3: #191610;
+        --ink-4: #201d15;
+        --cream: #ede3d0;
+        --cream-2: #c8bba3;
+        --cream-3: #8a7d68;
+        --gold: #c8a84b;
+        --gold-2: #e5c96a;
+        --gold-glow: rgba(200, 168, 75, 0.15);
+        --rust: #a83a14;
+        --border: rgba(200, 168, 75, 0.12);
+        --border-2: rgba(200, 168, 75, 0.28);
+        --border-3: rgba(200, 168, 75, 0.5);
+        --surface: rgba(255, 255, 255, 0.02);
+
+        --ff-display: "Cormorant Garamond", Georgia, serif;
+        --ff-head: "Syne", sans-serif;
+        --ff-mono: "DM Mono", monospace;
+        --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--ink);
+        color: var(--cream);
+        font-family: var(--ff-display);
+        font-weight: 300;
+        line-height: 1.75;
+        overflow-x: hidden;
+        cursor: none;
+      }
+
+      /* ─── CURSOR ─────────────────────── */
+      #c-dot {
+        position: fixed;
+        z-index: 9999;
+        pointer-events: none;
+        width: 7px;
+        height: 7px;
+        background: var(--cream);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        mix-blend-mode: difference;
+        transition: transform 0.08s;
+      }
+      #c-ring {
+        position: fixed;
+        z-index: 9998;
+        pointer-events: none;
+        width: 38px;
+        height: 38px;
+        border: 1px solid var(--gold);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        transition:
+          width 0.35s var(--ease),
+          height 0.35s var(--ease),
+          border-color 0.3s,
+          opacity 0.3s;
+      }
+      #c-ring.hov {
+        width: 64px;
+        height: 64px;
+        border-color: var(--gold-2);
+      }
+
+      /* ─── LOADER ─────────────────────── */
+      #loader {
+        position: fixed;
+        inset: 0;
+        z-index: 9000;
+        background: var(--ink);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        transition:
+          opacity 0.9s 0.3s,
+          visibility 0.9s 0.3s;
+      }
+      #loader.gone {
+        opacity: 0;
+        visibility: hidden;
+      }
+      .ld-line {
+        overflow: hidden;
+        margin-bottom: 0.25rem;
+      }
+      .ld-line span {
+        display: block;
+        font-family: var(--ff-display);
+        font-size: clamp(1.8rem, 4vw, 3rem);
+        font-weight: 300;
+        letter-spacing: 0.25em;
+        color: var(--cream);
+        transform: translateY(110%);
+        animation: slideUp 0.75s var(--ease) forwards;
+      }
+      .ld-line:nth-child(2) span {
+        animation-delay: 0.18s;
+        color: var(--gold);
+        font-style: italic;
+      }
+      .ld-track {
+        width: 180px;
+        height: 1px;
+        background: var(--ink-4);
+        margin-top: 2.5rem;
+        overflow: hidden;
+      }
+      .ld-fill {
+        height: 100%;
+        width: 0;
+        background: var(--gold);
+        animation: fillBar 1.6s var(--ease) 0.3s forwards;
+      }
+      @keyframes slideUp {
+        to {
+          transform: translateY(0);
+        }
+      }
+      @keyframes fillBar {
+        to {
+          width: 100%;
+        }
+      }
+
+      /* ─── NOISE ─────────────────────── */
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 8999;
+        pointer-events: none;
+        opacity: 0.025;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        background-size: 200px;
+      }
+
+      /* ─── PROGRESS ─────────────────── */
+      #prog {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 2px;
+        z-index: 2000;
+        background: linear-gradient(90deg, var(--gold), var(--gold-2));
+        width: 0;
+        transition: width 0.1s linear;
+      }
+
+      /* ─── NAV ─────────────────────── */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        padding: 1.5rem 4rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        transition: all 0.4s;
+      }
+      nav.stuck {
+        background: rgba(9, 8, 6, 0.88);
+        backdrop-filter: blur(24px) saturate(180%);
+        padding: 1rem 4rem;
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-logo {
+        font-family: var(--ff-mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--gold);
+        text-decoration: none;
+      }
+      .nav-links {
+        display: flex;
+        gap: 2.5rem;
+        list-style: none;
+      }
+      .nav-links a {
+        font-family: var(--ff-mono);
+        font-size: 0.68rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--cream-2);
+        text-decoration: none;
+        position: relative;
+        transition: color 0.3s;
+      }
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: var(--gold);
+        transition: width 0.3s var(--ease);
+      }
+      .nav-links a:hover,
+      .nav-links a.on {
+        color: var(--gold);
+      }
+      .nav-links a:hover::after,
+      .nav-links a.on::after {
+        width: 100%;
+      }
+
+      .burger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        background: none;
+        border: none;
+        cursor: none;
+        padding: 4px;
+      }
+      .burger span {
+        width: 26px;
+        height: 1px;
+        background: var(--cream);
+        transition:
+          transform 0.3s,
+          opacity 0.3s;
+      }
+      .burger.x span:nth-child(1) {
+        transform: translateY(6px) rotate(45deg);
+      }
+      .burger.x span:nth-child(2) {
+        opacity: 0;
+      }
+      .burger.x span:nth-child(3) {
+        transform: translateY(-6px) rotate(-45deg);
+      }
+
+      .mob-menu {
+        position: fixed;
+        inset: 0;
+        z-index: 999;
+        background: var(--ink);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 2.5rem;
+        transform: translateX(100%);
+        transition: transform 0.55s var(--ease);
+      }
+      .mob-menu.in {
+        transform: translateX(0);
+      }
+      .mob-menu a {
+        font-family: var(--ff-display);
+        font-size: clamp(2rem, 8vw, 3.5rem);
+        font-weight: 300;
+        color: var(--cream);
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+      .mob-menu a:hover {
+        color: var(--gold);
+      }
+
+      /* ─── LAYOUT UTILS ────────────── */
+      .wrap {
+        max-width: 1380px;
+        margin: 0 auto;
+        padding: 0 4rem;
+      }
+      .divider {
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--border-2),
+          transparent
+        );
+      }
+
+      .lbl {
+        font-family: var(--ff-mono);
+        font-size: 0.62rem;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 1rem;
+        display: block;
+      }
+      .h2 {
+        font-family: var(--ff-display);
+        font-size: clamp(2.4rem, 4.5vw, 4.2rem);
+        font-weight: 300;
+        line-height: 1.08;
+        letter-spacing: -0.01em;
+      }
+      .h2 em {
+        font-style: italic;
+        color: var(--gold);
+      }
+      .h3 {
+        font-family: var(--ff-display);
+        font-size: clamp(1.6rem, 3vw, 2.4rem);
+        font-weight: 300;
+        line-height: 1.15;
+      }
+      .h3 em {
+        font-style: italic;
+        color: var(--gold);
+      }
+
+      /* Reveal animations */
+      .rv {
+        opacity: 0;
+        transform: translateY(36px);
+        transition:
+          opacity 0.85s var(--ease),
+          transform 0.85s var(--ease);
+      }
+      .rv-l {
+        opacity: 0;
+        transform: translateX(-36px);
+        transition:
+          opacity 0.85s var(--ease),
+          transform 0.85s var(--ease);
+      }
+      .rv-r {
+        opacity: 0;
+        transform: translateX(36px);
+        transition:
+          opacity 0.85s var(--ease),
+          transform 0.85s var(--ease);
+      }
+      .rv.vis,
+      .rv-l.vis,
+      .rv-r.vis {
+        opacity: 1;
+        transform: none;
+      }
+      .d1 {
+        transition-delay: 0.05s;
+      }
+      .d2 {
+        transition-delay: 0.12s;
+      }
+      .d3 {
+        transition-delay: 0.19s;
+      }
+      .d4 {
+        transition-delay: 0.26s;
+      }
+      .d5 {
+        transition-delay: 0.33s;
+      }
+      .d6 {
+        transition-delay: 0.4s;
+      }
+
+      /* ─── BTNs ─────────────────────── */
+      .btn-g {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.7rem;
+        padding: 1rem 2.4rem;
+        background: var(--gold);
+        color: var(--ink);
+        font-family: var(--ff-mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        text-decoration: none;
+        border: none;
+        transition:
+          background 0.3s,
+          transform 0.3s;
+      }
+      .btn-g:hover {
+        background: var(--gold-2);
+        transform: translateY(-2px);
+      }
+      .btn-o {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.7rem;
+        padding: 1rem 2.4rem;
+        border: 1px solid var(--border-2);
+        color: var(--cream);
+        font-family: var(--ff-mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        text-decoration: none;
+        transition:
+          border-color 0.3s,
+          color 0.3s,
+          transform 0.3s;
+      }
+      .btn-o:hover {
+        border-color: var(--gold);
+        color: var(--gold);
+        transform: translateY(-2px);
+      }
+
+      /* ─── HERO ─────────────────────── */
+      #hero {
+        min-height: 100vh;
+        display: grid;
+        grid-template-rows: 1fr auto;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero-bg {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse 70% 55% at 75% 35%,
+            rgba(200, 168, 75, 0.075) 0%,
+            transparent 70%
+          ),
+          radial-gradient(
+            ellipse 40% 60% at 15% 65%,
+            rgba(168, 58, 20, 0.04) 0%,
+            transparent 60%
+          );
+      }
+      .hero-grid-bg {
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(var(--border) 1px, transparent 1px),
+          linear-gradient(90deg, var(--border) 1px, transparent 1px);
+        background-size: 72px 72px;
+        mask-image: radial-gradient(
+          ellipse 85% 70% at 50% 50%,
+          black,
+          transparent
+        );
+      }
+      .hero-inner {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 0 4rem 7rem;
+        max-width: 1380px;
+        margin: 0 auto;
+        width: 100%;
+        position: relative;
+        z-index: 1;
+      }
+      .hero-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.45rem 1rem;
+        border: 1px solid var(--border-2);
+        margin-bottom: 2.5rem;
+        margin-top: 9rem;
+        width: fit-content;
+        opacity: 0;
+        transform: translateY(16px);
+        animation: up 0.7s 1.9s var(--ease) forwards;
+      }
+      .hero-chip-dot {
+        width: 6px;
+        height: 6px;
+        background: var(--gold);
+        border-radius: 50%;
+        animation: glow 2s infinite;
+      }
+      .hero-chip-text {
+        font-family: var(--ff-mono);
+        font-size: 0.62rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gold);
+      }
+
+      .hero-hl {
+        font-family: var(--ff-display);
+        font-size: clamp(3.2rem, 8vw, 8rem);
+        font-weight: 300;
+        line-height: 1.02;
+        letter-spacing: -0.015em;
+        margin-bottom: 2.5rem;
+        opacity: 0;
+        transform: translateY(28px);
+        animation: up 1s 2.1s var(--ease) forwards;
+      }
+      .hero-hl em {
+        font-style: italic;
+        color: var(--gold);
+      }
+
+      .hero-sub {
+        max-width: 600px;
+        font-size: clamp(1rem, 1.8vw, 1.2rem);
+        color: var(--cream-2);
+        line-height: 1.85;
+        margin-bottom: 3rem;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: up 0.8s 2.4s var(--ease) forwards;
+      }
+      .tw-wrap {
+        color: var(--gold);
+      }
+      #tw {
+        border-right: 2px solid var(--gold);
+      }
+
+      .hero-ctas {
+        display: flex;
+        gap: 1.2rem;
+        flex-wrap: wrap;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: up 0.8s 2.6s var(--ease) forwards;
+      }
+      .hero-scroll {
+        position: absolute;
+        bottom: 3rem;
+        right: 4rem;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.6rem;
+        opacity: 0;
+        animation: up 0.7s 3s var(--ease) forwards;
+      }
+      .hero-scroll-line {
+        width: 1px;
+        height: 55px;
+        background: linear-gradient(to bottom, var(--gold), transparent);
+        animation: sc 2.2s ease-in-out infinite;
+      }
+      .hero-scroll span {
+        font-family: var(--ff-mono);
+        font-size: 0.56rem;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: var(--cream-3);
+        writing-mode: vertical-rl;
+      }
+      @keyframes up {
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      @keyframes sc {
+        0%,
+        100% {
+          transform: scaleY(1);
+          opacity: 1;
+        }
+        50% {
+          transform: scaleY(0.4);
+          opacity: 0.4;
+        }
+      }
+      @keyframes glow {
+        0%,
+        100% {
+          box-shadow: 0 0 0 0 rgba(200, 168, 75, 0.4);
+        }
+        50% {
+          box-shadow: 0 0 0 5px rgba(200, 168, 75, 0);
+        }
+      }
+
+      /* ─── STATS ────────────────────── */
+      #stats {
+        padding: 4.5rem 0;
+      }
+      .stats-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        border: 1px solid var(--border);
+      }
+      .stat-cell {
+        padding: 3rem 2.5rem;
+        border-right: 1px solid var(--border);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        transition: background 0.4s;
+      }
+      .stat-cell:last-child {
+        border-right: none;
+      }
+      .stat-cell:hover {
+        background: var(--gold-glow);
+      }
+      .stat-n {
+        display: block;
+        font-family: var(--ff-display);
+        font-size: clamp(2.5rem, 4.5vw, 4rem);
+        font-weight: 300;
+        color: var(--gold);
+        line-height: 1;
+      }
+      .stat-l {
+        display: block;
+        margin-top: 0.6rem;
+        font-family: var(--ff-mono);
+        font-size: 0.6rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--cream-3);
+      }
+
+      /* ─── ABOUT ─────────────────────── */
+      #about {
+        padding: 9rem 0;
+        background: var(--ink-2);
+      }
+      .about-wrap {
+        display: grid;
+        grid-template-columns: 1.1fr 1fr;
+        gap: 8rem;
+        align-items: start;
+      }
+      .about-body {
+        font-size: 1.05rem;
+        color: var(--cream-2);
+        line-height: 1.85;
+        margin-top: 2rem;
+      }
+      .about-body strong {
+        color: var(--cream);
+        font-weight: 400;
+      }
+
+      /* Problem/Solution card */
+      .ps-block {
+        margin-top: 3rem;
+        border: 1px solid var(--border);
+        overflow: hidden;
+      }
+      .ps-tab {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+      .ps-tab-btn {
+        padding: 0.85rem 1.5rem;
+        background: none;
+        border: none;
+        border-bottom: 2px solid transparent;
+        font-family: var(--ff-mono);
+        font-size: 0.65rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--cream-3);
+        cursor: none;
+        transition: all 0.3s;
+      }
+      .ps-tab-btn.act {
+        border-bottom-color: var(--gold);
+        color: var(--gold);
+        background: var(--gold-glow);
+      }
+      .ps-content {
+        padding: 2rem 2rem;
+        display: none;
+      }
+      .ps-content.act {
+        display: block;
+      }
+      .ps-text {
+        font-size: 0.98rem;
+        color: var(--cream-2);
+        line-height: 1.8;
+      }
+      .ps-text p + p {
+        margin-top: 1rem;
+      }
+
+      .pillars {
+        margin-top: 3rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.9rem;
+      }
+      .pillar {
+        display: grid;
+        grid-template-columns: 2.5rem 1fr;
+        gap: 1rem;
+        align-items: start;
+        padding: 1.25rem 1.5rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-left: 2px solid var(--gold);
+        transition:
+          border-color 0.3s,
+          background 0.3s;
+      }
+      .pillar:hover {
+        background: var(--gold-glow);
+        border-color: var(--border-2);
+      }
+      .pillar-n {
+        font-family: var(--ff-mono);
+        font-size: 0.6rem;
+        letter-spacing: 0.18em;
+        color: var(--gold);
+        padding-top: 0.2rem;
+      }
+      .pillar-body strong {
+        display: block;
+        font-family: var(--ff-head);
+        font-weight: 600;
+        font-size: 0.88rem;
+        letter-spacing: 0.04em;
+        color: var(--cream);
+        margin-bottom: 0.3rem;
+      }
+      .pillar-body {
+        font-size: 0.93rem;
+        color: var(--cream-2);
+        line-height: 1.65;
+      }
+
+      .about-right {
+        padding-top: 2rem;
+      }
+      .big-quote {
+        font-family: var(--ff-display);
+        font-size: clamp(1.6rem, 3vw, 2.5rem);
+        font-style: italic;
+        font-weight: 300;
+        line-height: 1.3;
+        color: var(--cream);
+        border-left: 2px solid var(--gold);
+        padding-left: 2rem;
+        margin-bottom: 3.5rem;
+      }
+
+      .skill-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.8rem;
+      }
+      .sk-bar {
+        padding: 0.85rem 1rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        font-family: var(--ff-mono);
+        font-size: 0.66rem;
+        letter-spacing: 0.1em;
+        color: var(--cream-2);
+        text-transform: uppercase;
+        position: relative;
+        overflow: hidden;
+        transition:
+          color 0.3s,
+          border-color 0.3s;
+      }
+      .sk-bar::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 0;
+        background: rgba(200, 168, 75, 0.09);
+        transition: width 1.3s var(--ease) 0.2s;
+      }
+      .sk-bar.vis::before {
+        width: var(--p);
+      }
+      .sk-bar:hover {
+        color: var(--gold);
+        border-color: var(--border-2);
+      }
+      .sk-inner {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        justify-content: space-between;
+      }
+      .sk-pct {
+        color: var(--gold);
+        font-size: 0.6rem;
+      }
+
+      /* ─── BOOKS ─────────────────────── */
+      #books {
+        padding: 9rem 0;
+        background: var(--ink-3);
+      }
+      .section-head {
+        margin-bottom: 5rem;
+      }
+
+      /* Problem/Solution generic block */
+      .prob-sol {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2px;
+        margin: 3.5rem 0;
+        border: 1px solid var(--border);
+        background: var(--border);
+      }
+      .prob-side,
+      .sol-side {
+        padding: 2.5rem 2.5rem;
+        background: var(--ink-2);
+      }
+      .prob-side {
+        border-right: none;
+      }
+      .ps-label {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-family: var(--ff-mono);
+        font-size: 0.6rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        margin-bottom: 1.25rem;
+      }
+      .ps-label .dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+      }
+      .prob-side .ps-label .dot {
+        background: var(--rust);
+        box-shadow: 0 0 8px var(--rust);
+      }
+      .sol-side .ps-label .dot {
+        background: #5aab5a;
+        box-shadow: 0 0 8px rgba(90, 171, 90, 0.6);
+      }
+      .prob-side .ps-label {
+        color: #b55a3a;
+      }
+      .sol-side .ps-label {
+        color: #5aab5a;
+      }
+      .ps-body {
+        font-size: 0.97rem;
+        color: var(--cream-2);
+        line-height: 1.8;
+      }
+      .ps-body p + p {
+        margin-top: 0.75rem;
+      }
+
+      /* Book authored grid */
+      .authored-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        margin-bottom: 5rem;
+      }
+      .bk {
+        background: var(--ink-2);
+        padding: 2.8rem 2.4rem;
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.4s var(--ease);
+      }
+      .bk::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, var(--gold-glow), transparent 60%);
+        opacity: 0;
+        transition: opacity 0.4s;
+      }
+      .bk:hover {
+        transform: translateY(-5px);
+      }
+      .bk:hover::after {
+        opacity: 1;
+      }
+      .bk::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--gold),
+          transparent
+        );
+        transform: scaleX(0);
+        transition: transform 0.5s var(--ease);
+      }
+      .bk:hover::before {
+        transform: scaleX(1);
+      }
+      .bk-yr {
+        font-family: var(--ff-mono);
+        font-size: 0.6rem;
+        letter-spacing: 0.22em;
+        color: var(--gold);
+        margin-bottom: 1rem;
+      }
+      .bk-name {
+        font-family: var(--ff-display);
+        font-size: 1.75rem;
+        font-style: italic;
+        color: var(--cream);
+        margin-bottom: 1rem;
+        line-height: 1.2;
+        position: relative;
+        z-index: 1;
+      }
+      .bk-desc {
+        font-size: 0.92rem;
+        color: var(--cream-3);
+        line-height: 1.75;
+        margin-bottom: 1.5rem;
+        position: relative;
+        z-index: 1;
+      }
+      .bk-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.45rem;
+        position: relative;
+        z-index: 1;
+      }
+      .tag {
+        padding: 0.22rem 0.7rem;
+        border: 1px solid var(--border-2);
+        font-family: var(--ff-mono);
+        font-size: 0.58rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--cream-2);
+      }
+
+      /* PS on books */
+      .books-ps {
+        margin-bottom: 4rem;
+      }
+
+      /* Collab section */
+      .collab-lbl {
+        font-family: var(--ff-mono);
+        font-size: 0.6rem;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--cream-3);
+        margin-bottom: 2rem;
+        margin-top: 5rem;
+      }
+      .collab-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+      .cl-card {
+        padding: 2.8rem;
+        background: var(--ink-2);
+        border: 1px solid var(--border);
+        position: relative;
+        transition: border-color 0.35s;
+      }
+      .cl-card:hover {
+        border-color: var(--border-2);
+      }
+      .cl-badge {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        padding: 0.3rem 0.75rem;
+        border: 1px solid var(--gold);
+        font-family: var(--ff-mono);
+        font-size: 0.48rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--gold);
+      }
+      .cl-name {
+        font-family: var(--ff-display);
+        font-size: 1.55rem;
+        font-style: italic;
+        color: var(--cream);
+        margin-bottom: 0.3rem;
+      }
+      .cl-auth {
+        font-family: var(--ff-mono);
+        font-size: 0.62rem;
+        letter-spacing: 0.15em;
+        color: var(--gold);
+        margin-bottom: 1.2rem;
+      }
+      .cl-desc {
+        font-size: 0.94rem;
+        color: var(--cream-3);
+        line-height: 1.78;
+      }
+      .cl-meta {
+        margin-top: 1.5rem;
+        font-family: var(--ff-mono);
+        font-size: 0.68rem;
+        color: var(--cream-2);
+      }
+      .cl-meta strong {
+        color: var(--gold);
+      }
+      .cl-skills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        margin-top: 1rem;
+      }
+
+      /* ─── CONTENT WRITING ──────────── */
+      #writing {
+        padding: 9rem 0;
+      }
+      .cw-grid {
+        display: grid;
+        grid-template-columns: 1.05fr 1fr;
+        gap: 7rem;
+        align-items: start;
+      }
+
+      .exp-card {
+        margin-top: 3rem;
+        padding: 2.2rem 2.5rem;
+        background: var(--ink-3);
+        border: 1px solid var(--border);
+        border-left: 3px solid var(--gold);
+      }
+      .exp-co {
+        font-family: var(--ff-head);
+        font-weight: 700;
+        font-size: 1.05rem;
+        letter-spacing: 0.04em;
+        color: var(--cream);
+        margin-bottom: 0.2rem;
+      }
+      .exp-role {
+        font-family: var(--ff-mono);
+        font-size: 0.67rem;
+        letter-spacing: 0.15em;
+        color: var(--gold);
+        text-transform: uppercase;
+        margin-bottom: 0.3rem;
+      }
+      .exp-dur {
+        font-family: var(--ff-mono);
+        font-size: 0.62rem;
+        color: var(--cream-3);
+        margin-bottom: 1.5rem;
+      }
+      .exp-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .exp-list li {
+        font-size: 0.95rem;
+        color: var(--cream-2);
+        padding-left: 1.5rem;
+        position: relative;
+      }
+      .exp-list li::before {
+        content: "—";
+        position: absolute;
+        left: 0;
+        color: var(--gold);
+        font-family: var(--ff-mono);
+      }
+
+      .cw-right-quote {
+        font-family: var(--ff-display);
+        font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+        font-style: italic;
+        color: var(--cream);
+        line-height: 1.45;
+        margin-bottom: 2rem;
+      }
+      .domain-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.65rem;
+        margin-top: 2rem;
+      }
+      .d-chip {
+        padding: 0.55rem 1.1rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        font-family: var(--ff-mono);
+        font-size: 0.62rem;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+        color: var(--cream-2);
+        transition:
+          border-color 0.3s,
+          color 0.3s,
+          background 0.3s;
+      }
+      .d-chip:hover {
+        border-color: var(--gold);
+        color: var(--gold);
+        background: var(--gold-glow);
+      }
+
+      /* ─── SEO ────────────────────────── */
+      #seo {
+        padding: 9rem 0;
+        background: var(--ink-2);
+      }
+      .seo-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 5rem;
+        align-items: center;
+      }
+
+      .seo-orb-wrap {
+        position: relative;
+        height: 420px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .orb {
+        position: absolute;
+        border-radius: 50%;
+        border: 1px solid;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .orb-1 {
+        width: 240px;
+        height: 240px;
+        border-color: rgba(200, 168, 75, 0.18);
+        background: radial-gradient(
+          circle at 35% 35%,
+          rgba(200, 168, 75, 0.12),
+          transparent 65%
+        );
+        animation: rotate1 18s linear infinite;
+      }
+      .orb-2 {
+        width: 160px;
+        height: 160px;
+        border-color: rgba(200, 168, 75, 0.25);
+        background: radial-gradient(
+          circle at 40% 40%,
+          rgba(200, 168, 75, 0.06),
+          transparent
+        );
+        animation: rotate2 12s linear infinite reverse;
+      }
+      .orb-3 {
+        width: 80px;
+        height: 80px;
+        border-color: rgba(200, 168, 75, 0.4);
+        background: radial-gradient(
+          circle,
+          rgba(200, 168, 75, 0.2),
+          transparent
+        );
+        animation: pulse 3s ease-in-out infinite;
+      }
+      .orb-core {
+        width: 16px;
+        height: 16px;
+        background: var(--gold);
+        border-radius: 50%;
+        box-shadow: 0 0 24px var(--gold);
+      }
+      .orb-sat {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: var(--gold-2);
+        border-radius: 50%;
+        box-shadow: 0 0 10px var(--gold);
+      }
+      .orb-1 .orb-sat:nth-child(2) {
+        top: -5px;
+        right: 30px;
+      }
+      .orb-1 .orb-sat:nth-child(3) {
+        bottom: 10px;
+        left: -5px;
+      }
+      .orb-2 .orb-sat:nth-child(2) {
+        top: -5px;
+        left: 20px;
+        width: 7px;
+        height: 7px;
+      }
+      @keyframes rotate1 {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes rotate2 {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+          box-shadow: 0 0 24px var(--gold);
+        }
+        50% {
+          transform: scale(1.15);
+          box-shadow: 0 0 40px var(--gold);
+        }
+      }
+
+      .seo-areas {
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+        margin-top: 2.5rem;
+      }
+      .seo-row {
+        display: grid;
+        grid-template-columns: 2.5rem 1fr;
+        gap: 1rem;
+        align-items: start;
+        padding: 1.1rem 1.4rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        transition:
+          border-color 0.3s,
+          background 0.3s;
+      }
+      .seo-row:hover {
+        border-color: var(--border-2);
+        background: var(--gold-glow);
+      }
+      .seo-ic {
+        width: 32px;
+        height: 32px;
+        border: 1px solid var(--border-2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+        color: var(--gold);
+        flex-shrink: 0;
+      }
+      .seo-rt strong {
+        display: block;
+        font-family: var(--ff-head);
+        font-weight: 600;
+        font-size: 0.84rem;
+        letter-spacing: 0.04em;
+        color: var(--cream);
+        margin-bottom: 0.15rem;
+      }
+      .seo-rt {
+        font-size: 0.9rem;
+        color: var(--cream-3);
+        line-height: 1.6;
+      }
+
+      /* ─── AI WORK ─────────────────────── */
+      #ai {
+        padding: 9rem 0;
+      }
+      .ai-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+        margin-top: 4rem;
+      }
+      .ai-card {
+        padding: 2.8rem;
+        background: var(--ink-3);
+        border: 1px solid var(--border);
+        position: relative;
+        overflow: hidden;
+        transition:
+          border-color 0.4s,
+          transform 0.4s var(--ease);
+      }
+      .ai-card:hover {
+        border-color: var(--border-2);
+        transform: translateY(-7px);
+      }
+      .ai-ghost {
+        position: absolute;
+        top: 0.5rem;
+        right: 1rem;
+        font-family: var(--ff-display);
+        font-size: 5rem;
+        font-weight: 300;
+        font-style: italic;
+        color: rgba(200, 168, 75, 0.06);
+        line-height: 1;
+        user-select: none;
+      }
+      .ai-ic {
+        font-size: 1.6rem;
+        margin-bottom: 1.5rem;
+      }
+      .ai-t {
+        font-family: var(--ff-head);
+        font-weight: 700;
+        font-size: 0.98rem;
+        letter-spacing: 0.04em;
+        color: var(--cream);
+        margin-bottom: 1rem;
+      }
+      .ai-d {
+        font-size: 0.93rem;
+        color: var(--cream-3);
+        line-height: 1.75;
+        margin-bottom: 1.5rem;
+      }
+      .ai-outs {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+      }
+      .ai-out {
+        font-family: var(--ff-mono);
+        font-size: 0.63rem;
+        letter-spacing: 0.1em;
+        color: var(--gold);
+        padding-left: 1rem;
+        position: relative;
+      }
+      .ai-out::before {
+        content: "›";
+        position: absolute;
+        left: 0;
+      }
+
+      /* ─── WHY CHOOSE ME ─────────────────── */
+      #why {
+        padding: 9rem 0;
+        background: var(--ink-2);
+      }
+      .why-intro {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6rem;
+        align-items: end;
+        margin-bottom: 6rem;
+      }
+      .why-intro-right {
+        padding-bottom: 0.5rem;
+      }
+      .why-intro-lead {
+        font-size: clamp(1rem, 1.8vw, 1.2rem);
+        color: var(--cream-2);
+        line-height: 1.85;
+      }
+      .why-intro-lead strong {
+        color: var(--cream);
+      }
+      .why-intro-lead em {
+        color: var(--gold);
+        font-style: italic;
+      }
+
+      /* The 5-pillar system strip */
+      .system-strip {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        border: 1px solid var(--border);
+        margin-bottom: 5rem;
+      }
+      .sys-cell {
+        padding: 2.2rem 1.8rem;
+        border-right: 1px solid var(--border);
+        text-align: center;
+        transition: background 0.4s;
+        position: relative;
+        overflow: hidden;
+      }
+      .sys-cell:last-child {
+        border-right: none;
+      }
+      .sys-cell::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: var(--gold);
+        transform: scaleX(0);
+        transition: transform 0.4s var(--ease);
+      }
+      .sys-cell:hover {
+        background: var(--gold-glow);
+      }
+      .sys-cell:hover::before {
+        transform: scaleX(1);
+      }
+      .sys-ic {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+      .sys-t {
+        font-family: var(--ff-head);
+        font-weight: 700;
+        font-size: 0.75rem;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 0.6rem;
+      }
+      .sys-d {
+        font-size: 0.82rem;
+        color: var(--cream-3);
+        line-height: 1.65;
+      }
+
+      /* The reasons grid — deep convincing approach */
+      .reasons-title {
+        font-family: var(--ff-mono);
+        font-size: 0.62rem;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 3rem;
+        text-align: center;
+      }
+      .reasons-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin-bottom: 5rem;
+      }
+      .reason-card {
+        padding: 2.8rem;
+        background: var(--ink-3);
+        border: 1px solid var(--border);
+        position: relative;
+        overflow: hidden;
+        transition:
+          border-color 0.4s,
+          background 0.4s;
+      }
+      .reason-card:hover {
+        border-color: var(--border-2);
+        background: rgba(200, 168, 75, 0.03);
+      }
+      .reason-n {
+        position: absolute;
+        top: 1.5rem;
+        right: 2rem;
+        font-family: var(--ff-display);
+        font-size: 5rem;
+        font-weight: 300;
+        font-style: italic;
+        color: rgba(200, 168, 75, 0.05);
+        line-height: 1;
+      }
+      .reason-icon {
+        font-size: 1.4rem;
+        margin-bottom: 1.2rem;
+      }
+      .reason-t {
+        font-family: var(--ff-head);
+        font-weight: 700;
+        font-size: 1.05rem;
+        letter-spacing: 0.04em;
+        color: var(--cream);
+        margin-bottom: 0.8rem;
+      }
+      .reason-d {
+        font-size: 0.96rem;
+        color: var(--cream-2);
+        line-height: 1.82;
+      }
+      .reason-d strong {
+        color: var(--cream);
+        font-weight: 400;
+      }
+      .reason-d em {
+        color: var(--gold);
+        font-style: normal;
+      }
+      .reason-proof {
+        margin-top: 1.5rem;
+        padding: 1rem 1.25rem;
+        background: var(--gold-glow);
+        border-left: 2px solid var(--gold);
+        font-family: var(--ff-mono);
+        font-size: 0.65rem;
+        letter-spacing: 0.1em;
+        color: var(--gold);
+        line-height: 1.6;
+      }
+
+      /* The closing verdict */
+      .verdict {
+        padding: 4rem;
+        background: var(--ink-4);
+        border: 1px solid var(--border-2);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .verdict::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 25%;
+        right: 25%;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--gold),
+          transparent
+        );
+      }
+      .verdict-hl {
+        font-family: var(--ff-display);
+        font-size: clamp(1.8rem, 4vw, 3.2rem);
+        font-style: italic;
+        font-weight: 300;
+        color: var(--cream);
+        line-height: 1.25;
+        margin-bottom: 1.5rem;
+      }
+      .verdict-hl em {
+        color: var(--gold);
+      }
+      .verdict-sub {
+        font-family: var(--ff-mono);
+        font-size: 0.68rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--cream-3);
+      }
+
+      /* ─── CONTACT ─────────────────────── */
+      #contact {
+        padding: 9rem 0;
+        background: var(--ink-3);
+      }
+      .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 7rem;
+        align-items: start;
+      }
+      .contact-hl {
+        font-family: var(--ff-display);
+        font-size: clamp(2.2rem, 4vw, 3.6rem);
+        font-weight: 300;
+        font-style: italic;
+        line-height: 1.15;
+        margin-bottom: 2rem;
+      }
+      .avail {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.7rem;
+        padding: 0.45rem 1.1rem;
+        border: 1px solid rgba(90, 171, 90, 0.3);
+        margin-bottom: 2rem;
+      }
+      .avail-dot {
+        width: 7px;
+        height: 7px;
+        background: #5aab5a;
+        border-radius: 50%;
+        animation: glow2 2s infinite;
+      }
+      .avail-t {
+        font-family: var(--ff-mono);
+        font-size: 0.62rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: #5aab5a;
+      }
+      @keyframes glow2 {
+        0%,
+        100% {
+          box-shadow: 0 0 0 0 rgba(90, 171, 90, 0.4);
+        }
+        50% {
+          box-shadow: 0 0 0 5px rgba(90, 171, 90, 0);
+        }
+      }
+      .contact-info {
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+        margin-top: 2rem;
+      }
+      .ci {
+        display: flex;
+        gap: 1rem;
+      }
+      .ci-l {
+        font-family: var(--ff-mono);
+        font-size: 0.58rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gold);
+        min-width: 60px;
+        padding-top: 0.15rem;
+      }
+      .ci-v {
+        font-size: 0.95rem;
+        color: var(--cream-2);
+      }
+
+      .cf {
+        display: flex;
+        flex-direction: column;
+        gap: 1.4rem;
+      }
+      .fg {
+        position: relative;
+      }
+      .fg input,
+      .fg textarea {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.025);
+        border: 1px solid var(--border);
+        border-bottom-color: var(--border-2);
+        color: var(--cream);
+        font-family: var(--ff-display);
+        font-size: 1rem;
+        font-weight: 300;
+        padding: 1.2rem 1rem 0.8rem;
+        outline: none;
+        resize: none;
+        transition:
+          border-color 0.3s,
+          background 0.3s;
+      }
+      .fg textarea {
+        height: 130px;
+      }
+      .fg input:focus,
+      .fg textarea:focus {
+        border-color: var(--gold);
+        background: var(--gold-glow);
+      }
+      .fg label {
+        position: absolute;
+        left: 1rem;
+        top: 1rem;
+        font-family: var(--ff-mono);
+        font-size: 0.62rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--cream-3);
+        transition:
+          top 0.3s,
+          font-size 0.3s,
+          color 0.3s;
+        pointer-events: none;
+      }
+      .fg input:focus ~ label,
+      .fg input:not(:placeholder-shown) ~ label,
+      .fg textarea:focus ~ label,
+      .fg textarea:not(:placeholder-shown) ~ label {
+        top: 0.32rem;
+        font-size: 0.52rem;
+        color: var(--gold);
+      }
+      .btn-send {
+        align-self: flex-start;
+        padding: 1.1rem 2.4rem;
+        background: var(--gold);
+        color: var(--ink);
+        font-family: var(--ff-mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        border: none;
+        cursor: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.7rem;
+        transition:
+          background 0.3s,
+          transform 0.3s;
+      }
+      .btn-send:hover {
+        background: var(--gold-2);
+        transform: translateY(-2px);
+      }
+      .f-ok {
+        display: none;
+        padding: 0.9rem 1.2rem;
+        border: 1px solid rgba(90, 171, 90, 0.3);
+        color: #5aab5a;
+        font-family: var(--ff-mono);
+        font-size: 0.65rem;
+        letter-spacing: 0.1em;
+      }
+      .f-ok.show {
+        display: block;
+      }
+
+      /* ─── FOOTER ─────────────────────── */
+      footer {
+        padding: 4rem 0 2rem;
+        border-top: 1px solid var(--border);
+      }
+      .footer-main {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        gap: 4rem;
+        margin-bottom: 3.5rem;
+      }
+      .f-brand {
+        font-family: var(--ff-display);
+        font-size: 1.7rem;
+        font-style: italic;
+        color: var(--cream);
+        display: block;
+        margin-bottom: 1rem;
+      }
+      .f-tag {
+        font-family: var(--ff-mono);
+        font-size: 0.62rem;
+        letter-spacing: 0.18em;
+        color: var(--cream-3);
+        text-transform: uppercase;
+        line-height: 1.9;
+      }
+      .f-nav-t {
+        font-family: var(--ff-mono);
+        font-size: 0.58rem;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 1.4rem;
+      }
+      .f-nav-l {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.65rem;
+      }
+      .f-nav-l a {
+        font-size: 0.9rem;
+        color: var(--cream-3);
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+      .f-nav-l a:hover {
+        color: var(--cream);
+      }
+      .f-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: 2rem;
+        border-top: 1px solid var(--border);
+      }
+      .f-copy {
+        font-family: var(--ff-mono);
+        font-size: 0.58rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--cream-3);
+      }
+      .f-top {
+        width: 38px;
+        height: 38px;
+        border: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--cream-3);
+        text-decoration: none;
+        font-size: 1.1rem;
+        transition:
+          border-color 0.3s,
+          color 0.3s;
+      }
+      .f-top:hover {
+        border-color: var(--gold);
+        color: var(--gold);
+      }
+
+      /* ─── RESPONSIVE ─────────────────── */
+      @media (max-width: 1100px) {
+        .about-wrap,
+        .seo-grid,
+        .contact-grid,
+        .cw-grid,
+        .why-intro {
+          grid-template-columns: 1fr;
+          gap: 3rem;
+        }
+        .authored-grid {
+          grid-template-columns: 1fr;
+        }
+        .collab-grid {
+          grid-template-columns: 1fr;
+        }
+        .ai-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .system-strip {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        .system-strip .sys-cell:nth-child(3) {
+          border-right: none;
+        }
+        .system-strip .sys-cell:nth-child(4),
+        .system-strip .sys-cell:nth-child(5) {
+          border-top: 1px solid var(--border);
+        }
+        .stats-row {
+          grid-template-columns: 1fr 1fr;
+        }
+        .stats-row .stat-cell:nth-child(2) {
+          border-right: none;
+        }
+        .stats-row .stat-cell:nth-child(3),
+        .stats-row .stat-cell:nth-child(4) {
+          border-top: 1px solid var(--border);
+        }
+        .footer-main {
+          grid-template-columns: 1fr 1fr;
+        }
+        .prob-sol {
+          grid-template-columns: 1fr;
+          gap: 1px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .wrap {
+          padding: 0 1.5rem;
+        }
+        nav {
+          padding: 1.2rem 1.5rem;
+        }
+        nav.stuck {
+          padding: 0.8rem 1.5rem;
+        }
+        .hero-inner {
+          padding: 0 1.5rem 5rem;
+        }
+        .hero-scroll {
+          display: none;
+        }
+        .nav-links {
+          display: none;
+        }
+        .burger {
+          display: flex;
+        }
+        .hero-ctas {
+          flex-direction: column;
+        }
+        .btn-g,
+        .btn-o {
+          justify-content: center;
+        }
+        .ai-grid {
+          grid-template-columns: 1fr;
+        }
+        .system-strip {
+          grid-template-columns: 1fr 1fr;
+        }
+        .reasons-grid {
+          grid-template-columns: 1fr;
+        }
+        .footer-main {
+          grid-template-columns: 1fr;
+          gap: 2.5rem;
+        }
+        section {
+          padding-top: 5rem !important;
+          padding-bottom: 5rem !important;
+        }
+        .verdict {
+          padding: 2.5rem 2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- LOADER -->
+    <div id="loader">
+      <div class="ld-line"><span>JATIN</span></div>
+      <div class="ld-line"><span>BHARAT</span></div>
+      <div class="ld-track"><div class="ld-fill"></div></div>
+    </div>
+
+    <!-- CURSOR -->
+    <div id="c-dot"></div>
+    <div id="c-ring"></div>
+
+    <!-- PROGRESS -->
+    <div id="prog"></div>
+
+    <!-- NAV -->
+    <nav id="nav">
+      <a href="#hero" class="nav-logo">JATIN BHARAT</a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#books">Books</a></li>
+        <li><a href="#writing">Writing</a></li>
+        <li><a href="#seo">SEO</a></li>
+        <li><a href="#ai">AI Work</a></li>
+        <li><a href="#why">Why Me</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="burger" id="bgrBtn">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+
+    <!-- MOBILE MENU -->
+    <div class="mob-menu" id="mobMenu">
+      <a href="#about" class="ml">About</a>
+      <a href="#books" class="ml">Books</a>
+      <a href="#writing" class="ml">Writing</a>
+      <a href="#seo" class="ml">SEO</a>
+      <a href="#ai" class="ml">AI Work</a>
+      <a href="#why" class="ml">Why Me</a>
+      <a href="#contact" class="ml">Contact</a>
+    </div>
+
+    <!-- ════════════════════════════════════════ -->
+    <!-- HERO                                    -->
+    <!-- ════════════════════════════════════════ -->
+    <section id="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-grid-bg"></div>
+      <div class="hero-inner">
+        <div class="hero-chip">
+          <div class="hero-chip-dot"></div>
+          <span class="hero-chip-text"
+            >Writer · Content Strategist · SEO Intelligence · AI Systems</span
+          >
+        </div>
+        <h1 class="hero-hl">
+          Crafting Words.<br />
+          <em>Engineering Visibility.</em><br />
+          Building Authority.
+        </h1>
+        <p class="hero-sub">
+          I am a writer, content strategist, and SEO evolution practitioner who
+          builds meaningful content systems for humans and
+          <span class="tw-wrap"
+            ><span id="tw">intelligent machines.</span></span
+          >
+        </p>
+        <div class="hero-ctas">
+          <a href="#books" class="btn-g">Explore My Work <span>→</span></a>
+          <a href="#why" class="btn-o">Why Choose Me</a>
+        </div>
+      </div>
+      <div class="hero-scroll">
+        <div class="hero-scroll-line"></div>
+        <span>Scroll</span>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ════════════════════════════════════════ -->
+    <!-- STATS                                   -->
+    <!-- ════════════════════════════════════════ -->
+    <section id="stats">
+      <div class="wrap">
+        <div class="stats-row">
+          <div class="stat-cell rv">
+            <span class="stat-n" data-c="3">0</span
+            ><span class="stat-l">Books Authored</span>
+          </div>
+          <div class="stat-cell rv d3">
+            <span class="stat-n" data-c="2">0</span
+            ><span class="stat-l">Client Books Compiled</span>
+          </div>
+          <div class="stat-cell rv d1">
+            <span class="stat-n" data-c="1500" data-s="+">0</span
+            ><span class="stat-l">Content Pieces Delivered</span>
+          </div>
+          <div class="stat-cell rv d2">
+            <span class="stat-n" data-c="6" data-s="+ yrs">0</span
+            ><span class="stat-l">of Writing Excellence</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ════════════════════════════════════════ -->
+    <!-- ABOUT                                   -->
+    <!-- ════════════════════════════════════════ -->
+    <section id="about">
+      <div class="wrap">
+        <div class="about-wrap">
+          <div class="about-left">
+            <div class="rv">
+              <span class="lbl">Who I Am</span>
+              <h2 class="h2">
+                A Writer Designed for the <em>New Age</em> of Content and Search
+              </h2>
+            </div>
+
+            <!-- PROBLEM / SOLUTION TABS -->
+            <div class="ps-block rv d1">
+              <div class="ps-tab">
+                <button class="ps-tab-btn act" data-t="prob">
+                  ⚠ The Problem
+                </button>
+                <button class="ps-tab-btn" data-t="sol">✓ The Solution</button>
+              </div>
+              <div class="ps-content act" id="prob">
+                <div class="ps-text">
+                  <p>
+                    Traditional content creation focuses on volume. Traditional
+                    SEO focuses on rankings.
+                    <strong>Both ignore the deeper requirement</strong> of
+                    today's ecosystem — trust, structure, and semantic clarity.
+                  </p>
+                  <p>
+                    Writers often create beautiful words that never reach their
+                    audience. Businesses publish content that ranks briefly but
+                    builds no authority.
+                  </p>
+                </div>
+              </div>
+              <div class="ps-content" id="sol">
+                <div class="ps-text">
+                  <p>
+                    I build content with three foundations that address the real
+                    challenge head-on.
+                  </p>
+                  <p>
+                    I am a writer who understands publishing discipline, a
+                    strategist who respects storytelling, and a learner who
+                    evolves with technology — producing content that is not only
+                    readable but also reliable, organized, and future-ready.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="pillars rv d2">
+              <div class="pillar">
+                <span class="pillar-n">01</span>
+                <div class="pillar-body">
+                  <strong>Meaning for People</strong>Content that answers
+                  questions, builds authority, and earns trust — not content
+                  that merely fills space.
+                </div>
+              </div>
+              <div class="pillar">
+                <span class="pillar-n">02</span>
+                <div class="pillar-body">
+                  <strong>Structure for Machines</strong>Schema-driven machine
+                  readability, entity salience, and semantic clarity for
+                  intelligent systems.
+                </div>
+              </div>
+              <div class="pillar">
+                <span class="pillar-n">03</span>
+                <div class="pillar-body">
+                  <strong>Strategy for Long-Term Relevance</strong>Every piece
+                  of content serves a purpose in a larger system of knowledge
+                  and visibility.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="about-right rv-r">
+            <blockquote class="big-quote">
+              "Every piece of content must serve a purpose in a larger system of
+              knowledge and visibility."
+            </blockquote>
+            <div class="skill-grid">
+              <div class="sk-bar" style="--p: 98%">
+                <div class="sk-inner">
+                  <span>Strategic Content Creation</span>
+                </div>
+              </div>
+              <div class="sk-bar" style="--p: 98%">
+                <div class="sk-inner">
+                  <span>Search & Semantic SEO</span>
+                </div>
+              </div>
+              <div class="sk-bar" style="--p: 98%">
+                <div class="sk-inner">
+                  <span>Book Authoring & Storytelling</span>
+                </div>
+              </div>
+              <div class="sk-bar" style="--p: 98%">
+                <div class="sk-inner">
+                  <span>Publishing & Compilation</span>
+                </div>
+              </div>
+              <div class="sk-bar" style="--p: 98%">
+                <div class="sk-inner">
+                  <span>AI Workflow Automation</span>
+                </div>
+              </div>
+              <div class="sk-bar" style="--p: 98%">
+                <div class="sk-inner">
+                  <span>Prompt Engineering & AI</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ════════════════════════════════════════ -->
+    <!-- BOOKS                                   -->
+    <!-- ════════════════════════════════════════ -->
+    <section id="books">
+      <div class="wrap">
+        <div class="section-head rv">
+          <span class="lbl">Books & Publishing Architecture</span>
+          <h2 class="h2">The Craft at Its <em>Highest Level</em></h2>
+          <p
+            style="
+              max-width: 640px;
+              color: var(--cream-2);
+              font-size: 1rem;
+              line-height: 1.85;
+              margin-top: 1.5rem;
+            "
+          >
+            This section represents my foundation as a writer and my discipline
+            as a publishing professional. I do not only create content for
+            clients — I practice the craft at the highest level through my own
+            authored works.
+          </p>
+        </div>
+
+        <!-- The Problem / Solution -->
+        <div class="books-ps rv">
+          <div class="prob-sol">
+            <div class="prob-side">
+              <div class="ps-label"><span class="dot"></span>The Problem</div>
+              <div class="ps-body">
+                <p>
+                  Many writers have ideas but fail to convert them into
+                  complete, coherent, and publishable works.
+                </p>
+                <p>
+                  What is missing is structure, clarity of thought, and
+                  consistency of execution — the publishing discipline that
+                  turns raw ideas into authoritative finished works.
+                </p>
+              </div>
+            </div>
+            <div class="sol-side">
+              <div class="ps-label"><span class="dot"></span>The Solution</div>
+              <div class="ps-body">
+                <p>
+                  I have authored and published three books that reflect my
+                  ability to transform ideas into finished literary and
+                  intellectual products — demonstrating that I don't just write
+                  content, I complete it.
+                </p>
+                <p>This is the proof of discipline, not just talent.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 Authored Books -->
+        <div class="authored-grid">
+          <div class="bk rv">
+            <span class="bk-yr">June 2022</span>
+            <div class="bk-name">Dristikon</div>
+            <p class="bk-desc">
+              Social and personal events examined through facts and arguments.
+              Profound insights in concise form, focusing on critical thinking,
+              reasoning, and the interpretation of reality. This work
+              demonstrates a structured, argument-driven approach to writing.
+            </p>
+            <div class="bk-tags">
+              <span class="tag">Analytical Writing</span>
+              <span class="tag">Philosophical Depth</span>
+              <span class="tag">Structured Argumentation</span>
+              <span class="tag">Clarity of Expression</span>
+            </div>
+          </div>
+          <div class="bk rv d1">
+            <span class="bk-yr">July 2024</span>
+            <div class="bk-name">The Worst Thing Ever Happened</div>
+            <p class="bk-desc">
+              Life's toughest challenges through deeply emotional narratives —
+              unpredictability, suffering, betrayal, and existential crises —
+              while offering insights into resilience and strength in adversity.
+              A book that compiles and curates multiple human voices.
+            </p>
+            <div class="bk-tags">
+              <span class="tag">Emotional Storytelling</span>
+              <span class="tag">Human-Centred Narratives</span>
+              <span class="tag">Voice Curation</span>
+              <span class="tag">Psychological Sensitivity</span>
+            </div>
+          </div>
+          <div class="bk rv d2">
+            <span class="bk-yr">June 2025</span>
+            <div class="bk-name">Anarth</div>
+            <p class="bk-desc">
+              The terrifying realm of hallucinations and altered consciousness —
+              how the mind fabricates a disturbingly real alternate reality.
+              Filled with suspense and psychological dread, this work proves
+              genre versatility and mastery of complex narrative construction.
+            </p>
+            <div class="bk-tags">
+              <span class="tag">Complex Narrative</span>
+              <span class="tag">Psychological Depth</span>
+              <span class="tag">Genre Versatility</span>
+              <span class="tag">Suspense & Atmosphere</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <img
+            style="background-size: cover; width: 100%; max-width: 100%"
+            src="./books.jpeg"
+            alt=""
+          />
+        </div>
+
+        <!-- Collab -->
+        <div class="collab-lbl rv">Client Collaboration & Editorial Work</div>
+        <div class="rv">
+          <div class="prob-sol" style="margin-bottom: 0; margin-top: 0">
+            <div class="prob-side">
+              <div class="ps-label">
+                <span class="dot"></span>The Problem for Clients
+              </div>
+              <div class="ps-body">
+                <p>
+                  Many professionals possess valuable knowledge — in scattered
+                  drafts, recordings, or unstructured notes.
+                </p>
+                <p>
+                  What they lack is a publishing-ready structure that transforms
+                  their knowledge into a book readers can understand and trust.
+                </p>
+              </div>
+            </div>
+            <div class="sol-side">
+              <div class="ps-label"><span class="dot"></span>The Solution</div>
+              <div class="ps-body">
+                <p>
+                  I collaborate with clients as a writer, compiler, and book
+                  architect — refining their ideas into structured, coherent,
+                  and professionally formatted books.
+                </p>
+                <p>
+                  The outcome: their knowledge, elevated into a lasting asset.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="collab-grid">
+          <div class="cl-card rv">
+            <span class="cl-badge">Writer & Compiler</span>
+            <div class="cl-name">Beyond The Charts</div>
+            <div class="cl-auth">Collaboration with Ruchir Gupta</div>
+            <p class="cl-desc">
+              Developed and structured a 170+ page book distilling complex stock
+              market concepts into clear, reader-friendly content. Formatted
+              professionally to guide readers from basic principles to advanced
+              strategies with clarity and practical value.
+            </p>
+            <div class="cl-meta">
+              <strong>170+</strong> Pages · Financial Education · Publishing
+              Architecture
+            </div>
+            <div class="cl-skills">
+              <span class="tag">Knowledge Distillation</span>
+              <span class="tag">Structural Design</span>
+              <span class="tag">Financial Content</span>
+              <span class="tag">Editorial Responsibility</span>
+            </div>
+          </div>
+          <div class="cl-card rv d1">
+            <span class="cl-badge">Compiler & Editor</span>
+            <div class="cl-name">I Love to Love You</div>
+            <div class="cl-auth">Collaboration with Komal Yadav</div>
+            <p class="cl-desc">
+              A deeply personal book dedicated to her partner. Required
+              emotional sensitivity, narrative coherence, and aesthetic
+              organization of poetic content — preserving the author's authentic
+              voice throughout every editorial decision.
+            </p>
+            <div class="cl-meta">
+              Emotional Editing · Creative Structuring · Artistic Alignment
+            </div>
+            <div class="cl-skills">
+              <span class="tag">Author Voice Preservation</span>
+              <span class="tag">Emotional Editing</span>
+              <span class="tag">Poetic Structure</span>
+              <span class="tag">Artistic Publishing</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <img
+            style="background-size: cover; width: 100%; max-width: 100%"
+            src="./sidebooks.jpeg"
+            alt=""
+          />
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ════════════════════════════════════════ -->
+    <!-- CONTENT WRITING                         -->
+    <!-- ════════════════════════════════════════ -->
+    <section id="writing">
+      <div class="wrap">
+        <div class="cw-grid">
+          <div class="cw-left">
+            <div class="rv">
+              <span class="lbl">Professional Content Writing Practice</span>
+              <h2 class="h2">Industry Writing at <em>Scale</em></h2>
+            </div>
+
+            <div class="prob-sol rv d1" style="margin: 3rem 0">
+              <div class="prob-side">
+                <div class="ps-label"><span class="dot"></span>The Problem</div>
+                <div class="ps-body">
+                  <p>
+                    Most companies produce content that fills websites but does
+                    not communicate authority, clarity, or trust.
+                  </p>
+                  <p>
+                    Without strategic direction, content becomes noise rather
+                    than value — volume without purpose.
+                  </p>
+                </div>
+              </div>
+              <div class="sol-side">
+                <div class="ps-label">
+                  <span class="dot"></span>The Solution
+                </div>
+                <div class="ps-body">
+                  <p>
+                    I apply structured writing principles to industry-level
+                    content creation — balancing clarity for readers, structure
+                    for search systems, and authority for brands.
+                  </p>
+                  <p>Real-world results, consistently delivered.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="exp-card rv d2">
+              <div class="exp-co">EraSky Technologies</div>
+              <div class="exp-role">Senior Content Writer</div>
+              <div class="exp-dur">1+ Year · Kanpur, India · IT Startup</div>
+              <ul class="exp-list">
+                <li>
+                  Website content writing and brand communication strategy
+                </li>
+                <li>Blog and article development across technical domains</li>
+                <li>Industry-focused educational content architecture</li>
+                <li>Long-term content responsibility and consistency</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="cw-right rv-r">
+            <blockquote class="cw-right-quote">
+              "Without strategic direction, content becomes noise rather than
+              value."
+            </blockquote>
+            <p
+              style="
+                color: var(--cream-2);
+                font-size: 0.97rem;
+                line-height: 1.82;
+                margin-bottom: 0.5rem;
+              "
+            >
+              Professional consistency, real-world business writing,
+              adaptability across domains, and long-term content responsibility
+              — these are what this role demonstrates beyond any portfolio
+              piece.
+            </p>
+            <div class="domain-chips">
+              <span class="d-chip">Web Copy</span>
+              <span class="d-chip">Blog Articles</span>
+              <span class="d-chip">Brand Voice</span>
+              <span class="d-chip">Technical Writing</span>
+              <span class="d-chip">Educational Content</span>
+              <span class="d-chip">Brand Strategy</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ════════════════════════════════════════ -->
+    <!-- SEO                                     -->
+    <!-- ════════════════════════════════════════ -->
+    <section id="seo">
+      <div class="wrap">
+        <div class="seo-grid">
+          <div class="seo-left">
+            <div class="rv">
+              <span class="lbl">Search Intelligence in an AI-Driven World</span>
+              <h2 class="h2">SEO in the <em>Age of AI</em></h2>
+            </div>
+
+            <div class="prob-sol rv d1" style="margin: 2.5rem 0">
+              <div class="prob-side">
+                <div class="ps-label"><span class="dot"></span>The Problem</div>
+                <div class="ps-body">
+                  <p>
+                    Traditional SEO focuses on rankings and keywords. Modern
+                    search systems operate on semantic understanding, entities,
+                    and machine reasoning.
+                  </p>
+                  <p>
+                    Many professionals still optimize for outdated mechanics —
+                    strategies that are fragile and short-lived.
+                  </p>
+                </div>
+              </div>
+              <div class="sol-side">
+                <div class="ps-label">
+                  <span class="dot"></span>The Solution
+                </div>
+                <div class="ps-body">
+                  <p>
+                    My SEO practice is built on understanding how algorithms
+                    evolved from lexical retrieval to semantic inference.
+                  </p>
+                  <p>
+                    I do not optimize for rankings alone.
+                    <strong
+                      >I optimize for selection by intelligent systems.</strong
+                    >
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="seo-areas">
+              <div class="seo-row rv d2">
+                <div class="seo-ic">⬡</div>
+                <div class="seo-rt">
+                  <strong>Entity Salience & Knowledge Graph Anchoring</strong
+                  >How AI systems anchor content to real-world entities and
+                  structured knowledge.
+                </div>
+              </div>
+              <div class="seo-row rv d3">
+                <div class="seo-ic">{ }</div>
+                <div class="seo-rt">
+                  <strong>Schema-Driven Machine Readability (JSON-LD)</strong
+                  >Structured markup that makes content interpretable by
+                  intelligent systems.
+                </div>
+              </div>
+              <div class="seo-row rv d4">
+                <div class="seo-ic">◎</div>
+                <div class="seo-rt">
+                  <strong>Topic Clustering & Semantic Linking</strong>Building
+                  topical authority through interconnected content ecosystems.
+                </div>
+              </div>
+              <div class="seo-row rv d5">
+                <div class="seo-ic">◈</div>
+                <div class="seo-rt">
+                  <strong>RAG Frameworks & Zero-Click Optimization</strong
+                  >Optimizing for AI retrieval and featured placement without
+                  the click required.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="seo-right rv-r">
+            <div class="seo-orb-wrap">
+              <div class="orb orb-1">
+                <div class="orb-sat"></div>
+                <div class="orb-sat"></div>
+              </div>
+              <div class="orb orb-2">
+                <div class="orb-sat"></div>
+              </div>
+              <div class="orb orb-3">
+                <div class="orb-core"></div>
+              </div>
+            </div>
+            <a
+              href="https://docs.google.com/document/d/1ssxLzBhaGTIvP7K-iMDYDG5HLSrqkQsxB9Mx5qSwbWw/edit?usp=sharing"
+              style="text-decoration: none"
+              target="_blank"
+            >
+              <p
+                style="
+                  text-align: center;
+                  font-family: var(--ff-mono);
+                  font-size: 0.7rem;
+                  letter-spacing: 0.22em;
+                  color: var(--cream-3);
+                  text-transform: uppercase;
+                  margin-top: 1.5rem;
+                "
+              >
+                Click here to learn more about my findings
+              </p>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ════════════════════════════════════════ -->
+    <!-- AI WORK                                 -->
+    <!-- ════════════════════════════════════════ -->
+    <section id="ai">
+      <div class="wrap">
+        <div class="rv">
+          <span class="lbl"
+            >Applying Artificial Intelligence to Real Workflows</span
+          >
+          <h2 class="h2">AI Applied to <em>Real Workflows</em></h2>
+        </div>
+
+        <div class="prob-sol rv d1" style="margin: 3rem 0">
+          <div class="prob-side">
+            <div class="ps-label"><span class="dot"></span>The Problem</div>
+            <div class="ps-body">
+              <p>
+                Many organizations use AI as a novelty tool rather than as a
+                productivity system.
+              </p>
+              <p>
+                This leads to inconsistent outputs, no repeatable process, and
+                limited operational impact — the hype without the results.
+              </p>
+            </div>
+          </div>
+          <div class="sol-side">
+            <div class="ps-label"><span class="dot"></span>The Solution</div>
+            <div class="ps-body">
+              <p>
+                I design AI-driven workflows that improve speed, accuracy, and
+                decision-making — treating AI as infrastructure, not a novelty.
+              </p>
+              <p>
+                Human-in-the-loop governance ensures quality. Systematic design
+                ensures repeatability.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="ai-grid">
+          <div class="ai-card rv">
+            <div class="ai-ghost">01</div>
+            <div class="ai-ic">⚡</div>
+            <div class="ai-t">
+              Prompt Engineering & Sales Process Optimization
+            </div>
+            <p class="ai-d">
+              Enhanced the sales workflow by integrating ChatGPT to deliver
+              AI-driven sales prompts and objection-handling responses. This
+              automation turned scattered manual processes into a consistent,
+              intelligent system.
+            </p>
+            <div class="ai-outs">
+              <div class="ai-out">Faster follow-up cycles</div>
+              <div class="ai-out">Reduced manual workload</div>
+              <div class="ai-out">Consistent objection handling</div>
+              <div class="ai-out">Improved client engagement</div>
+            </div>
+          </div>
+          <div class="ai-card rv d1">
+            <div class="ai-ghost">02</div>
+            <div class="ai-ic">◉</div>
+            <div class="ai-t">Sales Call Audit Automation</div>
+            <p class="ai-d">
+              Redesigned the traditional call review process using Audio Merger
+              AI, NoteGPT, and ChatGPT — merging recordings, generating
+              transcripts, extracting insights, and producing structured
+              evaluation reports automatically.
+            </p>
+            <div class="ai-outs">
+              <div class="ai-out">Automated transcript generation</div>
+              <div class="ai-out">AI-extracted performance insights</div>
+              <div class="ai-out">Structured MS Word reports</div>
+              <div class="ai-out">Faster training feedback cycles</div>
+            </div>
+          </div>
+          <div class="ai-card rv d2">
+            <div class="ai-ghost">03</div>
+            <div class="ai-ic">◈</div>
+            <div class="ai-t">AI in Publishing Architecture</div>
+            <p class="ai-d">
+              Beyond The Charts represents the intersection of writing and
+              AI-supported structuring — complex financial knowledge distilled
+              into structured, reader-friendly educational content with
+              human-in-the-loop governance throughout.
+            </p>
+            <div class="ai-outs">
+              <div class="ai-out">AI-assisted knowledge organization</div>
+              <div class="ai-out">Long-form content engineering</div>
+              <div class="ai-out">Human-in-the-loop quality control</div>
+              <div class="ai-out">Knowledge simplification at scale</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ════════════════════════════════════════ -->
+    <!-- WHY THIS COMBINATION OF SKILLS MATTERS  -->
+    <!-- ════════════════════════════════════════ -->
+    <section id="why">
+      <div class="wrap">
+        <!-- Intro -->
+        <div class="why-intro">
+          <div class="rv">
+            <span class="lbl"
+              >A Purpose-Built Skill System for Modern Content and SEO</span
+            >
+            <h2 class="h2">Why This Combination <em>Matters</em></h2>
+          </div>
+          <div class="why-intro-right rv-r">
+            <p class="why-intro-lead">
+              Most professionals operate in silos. Writers focus only on
+              creativity. SEO specialists focus only on algorithms. AI
+              enthusiasts focus only on tools.
+              <strong>This separation produces fragmented results.</strong>
+              <br /><br />
+              My skills are
+              <em>intentionally built as a single integrated system</em> — each
+              domain strengthening every other, producing outcomes that isolated
+              specialists simply cannot deliver.
+            </p>
+          </div>
+        </div>
+
+        <!-- The 5-pillar integrated system -->
+        <div class="system-strip rv">
+          <div class="sys-cell">
+            <div class="sys-ic">✍</div>
+            <div class="sys-t">Passion for Writing</div>
+            <p class="sys-d">
+              Keeps content authentic and emotionally grounded — the human
+              quality no algorithm can manufacture.
+            </p>
+          </div>
+          <div class="sys-cell">
+            <div class="sys-ic">📖</div>
+            <div class="sys-t">Publishing Discipline</div>
+            <p class="sys-d">
+              Ensures structure, coherence, and long-form authority — the craft
+              of completing, not just starting.
+            </p>
+          </div>
+          <div class="sys-cell">
+            <div class="sys-ic">🏢</div>
+            <div class="sys-t">Industry Writing</div>
+            <p class="sys-d">
+              Maintains real-world relevance and adaptability — proven in actual
+              business environments.
+            </p>
+          </div>
+          <div class="sys-cell">
+            <div class="sys-ic">◎</div>
+            <div class="sys-t">SEO Intelligence</div>
+            <p class="sys-d">
+              Pushes content toward the audience it deserves through modern
+              semantic search strategy.
+            </p>
+          </div>
+          <div class="sys-cell">
+            <div class="sys-ic">⚡</div>
+            <div class="sys-t">AI Enthusiasm</div>
+            <p class="sys-d">
+              Future-proofs strategy and execution — so your content thrives as
+              technology evolves.
+            </p>
+          </div>
+        </div>
+
+        <!-- Deep convincing reasons -->
+        <div class="reasons-title rv">
+          Six reasons to choose this skill system over a fragmented team
+        </div>
+
+        <div class="reasons-grid">
+          <div class="reason-card rv">
+            <div class="reason-n">01</div>
+            <div class="reason-icon">🎯</div>
+            <div class="reason-t">
+              Content That Reaches Its Audience — Not Just Gets Published
+            </div>
+            <p class="reason-d">
+              Most content fails because it is created without understanding how
+              modern search and AI systems interpret information. I work at the
+              intersection of writing, SEO intelligence, and AI — so every piece
+              I produce is <em>discoverable by design</em>, not by chance. You
+              get words that are found, read, and trusted.
+            </p>
+            <div class="reason-proof">
+              Proven: EraSky Technologies — 1+ year of consistent content
+              strategy delivering real business communication outcomes.
+            </div>
+          </div>
+
+          <div class="reason-card rv d1">
+            <div class="reason-n">02</div>
+            <div class="reason-icon">📚</div>
+            <div class="reason-t">
+              Publishing-Grade Discipline Applied to Every Deliverable
+            </div>
+            <p class="reason-d">
+              I have authored three books and architected two more for clients.
+              That means I understand
+              <em>what it takes to finish things at the highest level</em> —
+              structure, coherence, consistency, editorial responsibility. This
+              publishing discipline elevates every blog post, web page, and
+              content brief I touch into something that lasts.
+            </p>
+            <div class="reason-proof">
+              Proven: 3 published books + 170+ page financial education book
+              compiled for Ruchir Gupta from concept to press-ready.
+            </div>
+          </div>
+
+          <div class="reason-card rv d2">
+            <div class="reason-n">03</div>
+            <div class="reason-icon">◈</div>
+            <div class="reason-t">
+              Future-Ready SEO — Optimized for AI, Not Just Google
+            </div>
+            <p class="reason-d">
+              Search has shifted from keyword matching to semantic inference,
+              entity recognition, and AI-driven selection. I understand RAG
+              frameworks, JSON-LD schema, knowledge graph anchoring, and
+              zero-click optimization.
+              <em
+                >Your content doesn't just rank — it gets selected by
+                intelligent systems.</em
+              >
+              That's where the next decade of visibility lives.
+            </p>
+            <div class="reason-proof">
+              Built on: deep study of algorithmic evolution from lexical
+              retrieval to LLM-based information selection.
+            </div>
+          </div>
+
+          <div class="reason-card rv d3">
+            <div class="reason-n">04</div>
+            <div class="reason-icon">⚡</div>
+            <div class="reason-t">
+              AI-Augmented Productivity Without Losing the Human Edge
+            </div>
+            <p class="reason-d">
+              I have already deployed AI in real business workflows — sales
+              automation, call auditing, publishing architecture. I know
+              <em>where AI accelerates and where it requires human judgment</em
+              >. You get the speed of AI with the quality of an experienced
+              writer. Not one or the other — both, together, deliberately.
+            </p>
+            <div class="reason-proof">
+              Proven: ChatGPT-integrated sales system + Audio Merger AI call
+              audit process deployed and measured at real companies.
+            </div>
+          </div>
+
+          <div class="reason-card rv d4">
+            <div class="reason-n">05</div>
+            <div class="reason-icon">🔗</div>
+            <div class="reason-t">
+              One Integrated System — Not Five Disconnected Vendors
+            </div>
+            <p class="reason-d">
+              Hiring a separate writer, SEO consultant, AI specialist, and
+              publishing editor means managing fragmentation, briefing gaps, and
+              misaligned outputs.
+              <strong
+                >I bring all five disciplines into one coherent
+                workflow.</strong
+              >
+              There is no translation loss. No briefing gap. No one saying
+              "that's not my job."
+              <em>Every skill serves the same goal: your growth.</em>
+            </p>
+            <div class="reason-proof">
+              The proof is the portfolio itself — a single professional
+              producing books, blogs, SEO strategy, and AI workflows
+              simultaneously.
+            </div>
+          </div>
+
+          <div class="reason-card rv d5">
+            <div class="reason-n">06</div>
+            <div class="reason-icon">📈</div>
+            <div class="reason-t">
+              Content Built to Survive Trends, Not Chase Them
+            </div>
+            <p class="reason-d">
+              I don't write content to chase trends. I design systems that
+              survive them. Content built on semantic clarity, structural
+              integrity, and genuine authority doesn't collapse when an
+              algorithm updates or a trend fades. <em>It compounds.</em> Every
+              piece becomes a permanent asset in a growing knowledge ecosystem —
+              not a temporary spike that disappears next month.
+            </p>
+            <div class="reason-proof">
+              Principle: "I do not optimize for rankings alone. I optimize for
+              selection by intelligent systems — now and in the future."
+            </div>
+          </div>
+        </div>
+
+        <!-- Verdict -->
+        <div class="verdict rv">
+          <div class="verdict-hl">
+            Not Just a Content Writer.<br /><em>A Content Architect.</em>
+          </div>
+          <p class="verdict-sub">
+            Individually, these are skills. Collectively, they form a system
+            designed for impact — and for your growth.
+          </p>
+          <div
+            style="
+              margin-top: 2.5rem;
+              display: flex;
+              gap: 1.2rem;
+              justify-content: center;
+              flex-wrap: wrap;
+            "
+          >
+            <a href="#contact" class="btn-g">Start Building Together →</a>
+            <a href="#books" class="btn-o">View My Work</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ════════════════════════════════════════ -->
+    <!-- CONTACT                                 -->
+    <!-- ════════════════════════════════════════ -->
+    <section id="contact">
+      <div class="wrap">
+        <div class="contact-grid">
+          <div class="rv-l">
+            <span class="lbl">Get In Touch</span>
+            <h2 class="contact-hl">
+              Let's Build Something<br /><em>Lasting Together</em>
+            </h2>
+            <div class="avail">
+              <div class="avail-dot"></div>
+              <span class="avail-t">Available for Projects</span>
+            </div>
+            <p
+              style="
+                color: var(--cream-2);
+                font-size: 0.97rem;
+                line-height: 1.85;
+                max-width: 420px;
+              "
+            >
+              If you are looking for someone who understands words, structure,
+              algorithms, and intelligence — you are looking for a professional
+              built for this era. Let's talk about what we can build.
+            </p>
+            <div class="contact-info">
+              <div class="ci">
+                <span class="ci-l">Based</span>
+                <span class="ci-v">Kanpur, India</span>
+              </div>
+              <div class="ci">
+                <span class="ci-l">Focus</span>
+                <span class="ci-v"
+                  >Content Strategy · Books · SEO · AI Workflows</span
+                >
+              </div>
+              <div class="ci">
+                <span class="ci-l">Best For</span>
+                <span class="ci-v"
+                  >Brands, Startups, Authors, Professionals seeking
+                  authority</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="rv-r">
+            <form class="cf" id="cform">
+              <div class="fg">
+                <input type="text" id="nm" placeholder=" " required />
+                <label for="nm">Your Name</label>
+              </div>
+              <div class="fg">
+                <input type="email" id="em" placeholder=" " required />
+                <label for="em">Email Address</label>
+              </div>
+              <div class="fg">
+                <input type="text" id="subj" placeholder=" " />
+                <label for="subj">Subject / Project Type</label>
+              </div>
+              <div class="fg">
+                <textarea id="msg" placeholder=" " required></textarea>
+                <label for="msg">Your Message</label>
+              </div>
+              <button type="submit" class="btn-send" id="sndBtn">
+                Send Message <span>→</span>
+              </button>
+              <div class="f-ok" id="fOk">
+                ✓ Message received. I'll respond within 24 hours.
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════ -->
+    <!-- FOOTER                                  -->
+    <!-- ════════════════════════════════════════ -->
+    <footer>
+      <div class="wrap">
+        <div class="footer-main">
+          <div>
+            <span style="color: #e5c96a" class="f-brand">JATIN BHARAT</span>
+            <p class="f-tag">
+              Crafting Words.<br />
+              Engineering Visibility.<br />
+              Building Authority in the Age of AI.
+            </p>
+          </div>
+          <div>
+            <div class="f-nav-t">Navigate</div>
+            <ul class="f-nav-l">
+              <li><a href="#about">About</a></li>
+              <li><a href="#books">Books & Publishing</a></li>
+              <li><a href="#writing">Content Writing</a></li>
+              <li><a href="#seo">SEO Intelligence</a></li>
+              <li><a href="#ai">AI Work</a></li>
+              <li><a href="#why">Why Choose Me</a></li>
+            </ul>
+          </div>
+          <div>
+            <div class="f-nav-t">Expertise</div>
+            <ul class="f-nav-l">
+              <li><a href="#books">Book Authoring</a></li>
+              <li><a href="#books">Editorial Compilation</a></li>
+              <li><a href="#seo">Semantic SEO</a></li>
+              <li><a href="#ai">Prompt Engineering</a></li>
+              <li><a href="#ai">AI Workflow Design</a></li>
+              <li><a href="#contact">Collaboration</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="f-bottom">
+          <span class="f-copy"
+            >© 2026 · JATIN BHARAT · All Rights Reserved</span
+          >
+          <a href="#hero" class="f-top" title="Back to top">↑</a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      /* ── Loader ── */
+      window.addEventListener("load", () => {
+        setTimeout(
+          () => document.getElementById("loader").classList.add("gone"),
+          2000,
+        );
+      });
+
+      /* ── Cursor ── */
+      const dot = document.getElementById("c-dot");
+      const ring = document.getElementById("c-ring");
+      let mx = 0,
+        my = 0,
+        rx = 0,
+        ry = 0;
+      document.addEventListener("mousemove", (e) => {
+        mx = e.clientX;
+        my = e.clientY;
+        dot.style.left = mx + "px";
+        dot.style.top = my + "px";
+      });
+      (function animRing() {
+        rx += (mx - rx) * 0.11;
+        ry += (my - ry) * 0.11;
+        ring.style.left = rx + "px";
+        ring.style.top = ry + "px";
+        requestAnimationFrame(animRing);
+      })();
+      document
+        .querySelectorAll(
+          "a, button, .bk, .ai-card, .reason-card, .pillar, .seo-row, .cl-card",
+        )
+        .forEach((el) => {
+          el.addEventListener("mouseenter", () => ring.classList.add("hov"));
+          el.addEventListener("mouseleave", () => ring.classList.remove("hov"));
+        });
+
+      /* ── Nav ── */
+      const nav = document.getElementById("nav");
+      const prog = document.getElementById("prog");
+      window.addEventListener("scroll", () => {
+        const s = window.scrollY;
+        const max = document.body.scrollHeight - window.innerHeight;
+        prog.style.width = (s / max) * 100 + "%";
+        nav.classList.toggle("stuck", s > 60);
+        document.querySelectorAll("section[id]").forEach((sec) => {
+          const top = sec.offsetTop - 130;
+          if (s >= top && s < top + sec.offsetHeight) {
+            document.querySelectorAll(".nav-links a").forEach((a) => {
+              a.classList.toggle("on", a.getAttribute("href") === "#" + sec.id);
+            });
+          }
+        });
+      });
+
+      /* ── Hamburger ── */
+      const bgrBtn = document.getElementById("bgrBtn");
+      const mobMenu = document.getElementById("mobMenu");
+      bgrBtn.addEventListener("click", () => {
+        bgrBtn.classList.toggle("x");
+        mobMenu.classList.toggle("in");
+      });
+      document.querySelectorAll(".ml").forEach((l) =>
+        l.addEventListener("click", () => {
+          bgrBtn.classList.remove("x");
+          mobMenu.classList.remove("in");
+        }),
+      );
+
+      /* ── Typewriter ── */
+      const words = [
+        "intelligent machines.",
+        "modern AI systems.",
+        "search algorithms.",
+        "knowledge graphs.",
+        "the future of search.",
+        "retrieval systems.",
+      ];
+      let wi = 0,
+        ci = 0,
+        del = false;
+      const tw = document.getElementById("tw");
+      function type() {
+        const w = words[wi];
+        if (!del) {
+          ci++;
+          tw.textContent = w.slice(0, ci);
+          if (ci === w.length) {
+            del = true;
+            setTimeout(type, 2200);
+            return;
+          }
+        } else {
+          ci--;
+          tw.textContent = w.slice(0, ci);
+          if (ci === 0) {
+            del = false;
+            wi = (wi + 1) % words.length;
+          }
+        }
+        setTimeout(type, del ? 45 : 75);
+      }
+      setTimeout(type, 3000);
+
+      /* ── Reveal on scroll ── */
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) e.target.classList.add("vis");
+          });
+        },
+        { threshold: 0.08 },
+      );
+      document
+        .querySelectorAll(".rv, .rv-l, .rv-r")
+        .forEach((el) => observer.observe(el));
+
+      /* ── Skill bars ── */
+      const sbObs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) e.target.classList.add("vis");
+          });
+        },
+        { threshold: 0.3 },
+      );
+      document.querySelectorAll(".sk-bar").forEach((el) => sbObs.observe(el));
+
+      /* ── Count up ── */
+      function countUp(el) {
+        const target = parseInt(el.dataset.c);
+        const suffix = el.dataset.s || "";
+        const dur = 1600;
+        const steps = Math.min(target, 60);
+        const interval = dur / steps;
+        let cur = 0;
+        const t = setInterval(() => {
+          cur++;
+          const progress = cur / steps;
+          const val = Math.round(progress * target);
+          el.textContent = val + suffix;
+          if (cur >= steps) {
+            el.textContent = target + suffix;
+            clearInterval(t);
+          }
+        }, interval);
+      }
+      const cntObs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              countUp(e.target);
+              cntObs.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.5 },
+      );
+      document
+        .querySelectorAll(".stat-n[data-c]")
+        .forEach((el) => cntObs.observe(el));
+
+      /* ── Problem/Solution Tabs ── */
+      document.querySelectorAll(".ps-tab-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const block = btn.closest(".ps-block");
+          block
+            .querySelectorAll(".ps-tab-btn")
+            .forEach((b) => b.classList.remove("act"));
+          block
+            .querySelectorAll(".ps-content")
+            .forEach((c) => c.classList.remove("act"));
+          btn.classList.add("act");
+          block.querySelector("#" + btn.dataset.t).classList.add("act");
+        });
+      });
+
+      /* ── Contact Form ── */
+      document.getElementById("cform").addEventListener("submit", function (e) {
+        e.preventDefault();
+        const btn = document.getElementById("sndBtn");
+        btn.textContent = "Sending…";
+        setTimeout(() => {
+          btn.innerHTML = "Sent ✓";
+          document.getElementById("fOk").classList.add("show");
+          this.reset();
+        }, 1400);
+      });
+
+      /* ── Easter egg ── */
+      console.log(
+        "%c CONTENT ARCHITECT ",
+        "background:#c8a84b;color:#090806;font-size:18px;font-weight:bold;padding:10px 20px;letter-spacing:2px;",
+      );
+      console.log(
+        "%c Crafting Words. Engineering Visibility. Building Authority in the Age of AI. ",
+        "color:#c8a84b;font-size:11px;letter-spacing:1.5px;",
+      );
+      console.log(
+        "%c → You inspect code. That tells me you care about quality. Let's talk. ",
+        "color:#8a7d68;font-size:11px;",
+      );
+    </script>
+  </body>
+</html>
